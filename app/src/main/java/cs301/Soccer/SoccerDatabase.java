@@ -158,6 +158,29 @@ public class SoccerDatabase implements SoccerDB {
     // get the nTH player
     @Override
     public SoccerPlayer playerIndex(int idx, String teamName) {
+//       if team name is null, return nth player in database
+        if (teamName == null) {
+            Log.i("player index", "all players");
+            int count = 0;
+            for (String key : database.keySet()) {
+                if (count == idx) {
+                    return database.get(key);
+                }
+                count++;
+            }
+        } else {
+//            if team name is not null, return nth player on team
+            Log.i("player index", teamName);
+            int count = 0;
+            for (String key : database.keySet()) {
+                if (database.get(key).getTeamName().equals(teamName)) {
+                    if (count == idx) {
+                        return database.get(key);
+                    }
+                    count++;
+                }
+            }
+        }
         return null;
     }
 
