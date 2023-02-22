@@ -4,6 +4,7 @@ import android.util.Log;
 import cs301.Soccer.soccerPlayer.SoccerPlayer;
 import java.io.File;
 import java.util.*;
+import java.util.Hashtable;
 
 /**
  * Soccer player database -- presently, all dummied up
@@ -15,16 +16,25 @@ import java.util.*;
 public class SoccerDatabase implements SoccerDB {
 
     // dummied up variable; you will need to change this
-    private Hashtable database;
+//    private Hashtable database;
+
+    Hashtable<String, SoccerPlayer> database = new Hashtable<>();
 
     /**
      * add a player
      *
      * @see SoccerDB#addPlayer(String, String, int, String)
      */
+
     @Override
     public boolean addPlayer(String firstName, String lastName,
                              int uniformNumber, String teamName) {
+        SoccerPlayer player = new SoccerPlayer(firstName, lastName, uniformNumber, teamName);
+        database.put(firstName + "##" + lastName, player);
+        Log.i("add player", firstName + " " + lastName + " " + uniformNumber + " " + teamName);
+//        print hashtable
+        Log.i("database", database.toString());
+
         return false;
     }
 
@@ -35,6 +45,7 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean removePlayer(String firstName, String lastName) {
+
         return false;
     }
 
