@@ -50,6 +50,12 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean removePlayer(String firstName, String lastName) {
+//        check if player exists
+        if (database.containsKey(firstName + "##" + lastName)) {
+            Log.i("remove player", firstName + " " + lastName);
+            database.remove(firstName + "##" + lastName);
+            return true;
+        }
 
         return false;
     }
@@ -61,6 +67,10 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public SoccerPlayer getPlayer(String firstName, String lastName) {
+        if (database.containsKey(firstName + "##" + lastName)) {
+            Log.i("get player", firstName + " " + lastName);
+            return database.get(firstName + "##" + lastName);
+        }
 
         return null;
     }
@@ -72,6 +82,12 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpGoals(String firstName, String lastName) {
+//        add goal to player
+        if (database.containsKey(firstName + "##" + lastName)) {
+            Log.i("bump goals", firstName + " " + lastName);
+            database.get(firstName + "##" + lastName).bumpGoals();
+            return true;
+        }
         return false;
     }
 
@@ -82,6 +98,12 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpYellowCards(String firstName, String lastName) {
+//        add yellow card to player
+        if (database.containsKey(firstName + "##" + lastName)) {
+            Log.i("bump yellow cards", firstName + " " + lastName);
+            database.get(firstName + "##" + lastName).bumpYellowCards();
+            return true;
+        }
         return false;
     }
 
@@ -92,6 +114,12 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpRedCards(String firstName, String lastName) {
+//        add red card to player
+        if (database.containsKey(firstName + "##" + lastName)) {
+            Log.i("bump red cards", firstName + " " + lastName);
+            database.get(firstName + "##" + lastName).bumpRedCards();
+            return true;
+        }
         return false;
     }
 
