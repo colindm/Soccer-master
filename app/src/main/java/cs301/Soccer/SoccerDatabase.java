@@ -30,12 +30,17 @@ public class SoccerDatabase implements SoccerDB {
     public boolean addPlayer(String firstName, String lastName,
                              int uniformNumber, String teamName) {
         SoccerPlayer player = new SoccerPlayer(firstName, lastName, uniformNumber, teamName);
+//        check if player already exists
+        if (database.containsKey(firstName + "##" + lastName)) {
+            Log.i("add player", "player already exists");
+            return false;
+        }
         database.put(firstName + "##" + lastName, player);
         Log.i("add player", firstName + " " + lastName + " " + uniformNumber + " " + teamName);
 //        print hashtable
         Log.i("database", database.toString());
 
-        return false;
+        return true;
     }
 
     /**
@@ -56,6 +61,7 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public SoccerPlayer getPlayer(String firstName, String lastName) {
+
         return null;
     }
 
