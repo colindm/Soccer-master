@@ -2,9 +2,19 @@ package cs301.Soccer;
 
 import android.util.Log;
 import cs301.Soccer.soccerPlayer.SoccerPlayer;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.*;
 import java.util.Hashtable;
+// for files
+import java.io.FileInputStream;
 
 /**
  * Soccer player database -- presently, all dummied up
@@ -192,6 +202,28 @@ public class SoccerDatabase implements SoccerDB {
     // read data from file
     @Override
     public boolean readData(File file) {
+//        if file exists, read data from file
+        if (file.exists()) {
+            Log.i("read data", "file exists");
+            try {
+                FileReader fr = new FileReader(file);
+                BufferedReader br = new BufferedReader(fr);
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] data = line.split("##");
+                    for (int i = 0; i < data.length; i++) {
+                        Log.i("read data", data[i]);
+                    }
+                    SoccerPlayer player = new SoccerPlayer(data[0], data[1], Integer.parseInt(data[2]), data[3]);
+                    Log.i("read data player", player.toString());
+                    database.put(data[0] + "##" + data[1], player);
+                }
+                br.close();
+                fr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return file.exists();
     }
 
@@ -203,6 +235,32 @@ public class SoccerDatabase implements SoccerDB {
     // write data to file
     @Override
     public boolean writeData(File file) {
+//        create file if it doesn't exist
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                Log.i("write data", "file created");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+//        if file exists, write data to file
+        if (file.exists()) {
+            Log.i("write data", "file exists");
+            try {
+                FileWriter fw = new FileWriter(file);
+                BufferedWriter bw = new BufferedWriter(fw);
+                for (String key : database.keySet()) {
+                    bw.write(database.get(key).toString());
+                    bw.newLine();
+                }
+                bw.close();
+                fw.close();
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return false;
     }
 
